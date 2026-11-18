@@ -1,0 +1,67 @@
+/* ==========================================================================
+   base.css — shared by every page in the toolbox.
+   Holds the design tokens, a minimal reset and shared components.
+   Page-specific styles live next to each page (see README).
+   ========================================================================== */
+
+/* ---- Design tokens ------------------------------------------------------ */
+:root {
+  --ground: #141a20;   /* page background */
+  --panel: #1b232b;    /* raised surfaces (cards) */
+  --line: #2a343e;     /* borders and dividers */
+  --ink: #e9e5db;      /* primary text */
+  --ink-dim: #79858f;  /* secondary text */
+  --mark: #d3a24c;     /* accent */
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+}
+
+/* ---- Reset -------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* ---- Utilities ---------------------------------------------------------- */
+.mono { font-family: var(--font-mono); }
+
+/* ---- Shared components -------------------------------------------------- */
+
+/* Back link shown at the top-left of every tool page. */
+.back {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  color: var(--ink-dim);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+.back:hover { color: var(--mark); border-color: var(--mark); }
+.back:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* Primary action button. */
+.button {
+  display: inline-block;
+  color: var(--ground);
+  background: var(--mark);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+}
+.button:hover { filter: brightness(1.1); }
+.button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }

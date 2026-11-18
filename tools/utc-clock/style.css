@@ -1,0 +1,47 @@
+/* ==========================================================================
+   UTC clock — page-specific styles. Requires assets/css/base.css.
+   ========================================================================== */
+
+html, body { height: 100%; }
+body {
+  font-family: var(--font-mono);
+  line-height: normal;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.clock { text-align: center; }
+
+.date {
+  font-size: clamp(0.85rem, 2.6vw, 1.05rem);
+  letter-spacing: 0.1em;
+  color: var(--ink-dim);
+  margin-bottom: 0.7rem;
+}
+
+.readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.12em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  line-height: 1;
+}
+.hm  { font-size: clamp(3rem, 17vw, 8rem); font-weight: 500; }
+.sec { font-size: clamp(1.2rem, 6vw, 2.6rem); color: var(--mark); }
+.zone {
+  font-size: clamp(0.9rem, 3vw, 1.1rem);
+  color: var(--ink-dim);
+  align-self: baseline;
+  margin-left: 0.3em;
+}
+
+.meta {
+  margin-top: 1.6rem;
+  font-size: 0.8rem;
+  color: var(--ink-dim);
+  line-height: 1.9;
+}
+.iso { color: var(--ink); }

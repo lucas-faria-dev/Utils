@@ -4,57 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>UTC clock</title>
-<style>
-  :root {
-    --ground: #141a20;
-    --ink: #e9e5db;
-    --ink-dim: #79858f;
-    --mark: #d3a24c;
-  }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; margin: 0; }
-  body {
-    background: var(--ground);
-    color: var(--ink);
-    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-    display: grid;
-    place-items: center;
-    padding: 1.5rem;
-  }
-  .clock { text-align: center; }
-  .date {
-    font-size: clamp(0.85rem, 2.6vw, 1.05rem);
-    letter-spacing: 0.1em;
-    color: var(--ink-dim);
-    margin-bottom: 0.7rem;
-  }
-  .readout {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 0.12em;
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: "tnum" 1;
-    line-height: 1;
-  }
-  .hm { font-size: clamp(3rem, 17vw, 8rem); font-weight: 500; }
-  .sec { font-size: clamp(1.2rem, 6vw, 2.6rem); color: var(--mark); }
-  .zone {
-    font-size: clamp(0.9rem, 3vw, 1.1rem);
-    color: var(--ink-dim);
-    align-self: baseline;
-    margin-left: 0.3em;
-  }
-  .meta {
-    margin-top: 1.6rem;
-    font-size: 0.8rem;
-    color: var(--ink-dim);
-    line-height: 1.9;
-  }
-  .iso { color: var(--ink); }
-</style>
+<link rel="stylesheet" href="../../assets/css/base.css">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
 </head>
 <body>
+  <a class="back" href="../../index.html">&larr; Back to toolbox</a>
+
   <div class="clock">
     <div class="date" id="date">&nbsp;</div>
     <div class="readout">
@@ -67,52 +23,5 @@
       <div id="local">&nbsp;</div>
     </div>
   </div>
-
-<script>
-  const el = {
-    date:  document.getElementById('date'),
-    hm:    document.getElementById('hm'),
-    sec:   document.getElementById('sec'),
-    iso:   document.getElementById('iso'),
-    local: document.getElementById('local')
-  };
-
-  const pad = n => String(n).padStart(2, '0');
-
-  // Locale-aware date, forced into the UTC zone.
-  const dateFormat = new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'UTC',
-    weekday: 'long',
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric'
-  });
-
-  function render() {
-    const now = new Date();
-
-    el.date.textContent = dateFormat.format(now);
-    el.hm.textContent   = pad(now.getUTCHours()) + ':' + pad(now.getUTCMinutes());
-    el.sec.textContent  = pad(now.getUTCSeconds());
-    el.iso.textContent  = now.toISOString().slice(0, 19) + 'Z';
-
-    // getTimezoneOffset() returns minutes to ADD to local time to reach UTC,
-    // so the sign is inverted from how offsets are normally written.
-    const offset = -now.getTimezoneOffset();
-    const abs = Math.abs(offset);
-    el.local.textContent =
-      'This device is set to UTC' + (offset < 0 ? '\u2212' : '+') +
-      pad(Math.floor(abs / 60)) + ':' + pad(abs % 60);
-  }
-
-  // Self-correcting tick: schedules the next update on the next whole second
-  // instead of blindly every 1000ms, so it never drifts out of alignment.
-  function tick() {
-    render();
-    setTimeout(tick, 1000 - (Date.now() % 1000));
-  }
-
-  tick();
-</script>
 </body>
 </html>
