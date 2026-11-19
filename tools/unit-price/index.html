@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unit Price</title>
+<meta name="theme-color" content="#141a20">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="../../assets/css/base.css">
+<link rel="stylesheet" href="style.css">
+<script src="calc.js" defer></script>
+<script src="script.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <a class="back" href="../../index.html">&larr; Back to toolbox</a>
+
+    <header class="header">
+      <h1>Unit Price</h1>
+      <fieldset class="system">
+        <legend>Show results in</legend>
+        <div class="segmented">
+          <label class="segment">
+            <input type="radio" name="system" value="metric" checked>
+            <span>Metric</span>
+          </label>
+          <label class="segment">
+            <input type="radio" name="system" value="imperial">
+            <span>Imperial</span>
+          </label>
+        </div>
+      </fieldset>
+    </header>
+
+    <div id="items" class="items"></div>
+
+    <button type="button" id="add" class="button button-secondary">Add item</button>
+    <button type="button" id="compare" class="button button-primary">Compare</button>
+
+    <div id="summary-area" class="summary-area" aria-live="polite">
+      <p id="summary" class="summary"></p>
+      <p id="note" class="note"></p>
+    </div>
+
+    <button type="button" id="clear" class="button button-quiet">Clear all</button>
+
+    <footer class="footer">
+      <p id="offline" class="offline" hidden>Ready to use offline</p>
+    </footer>
+  </main>
+
+  <template id="row-template">
+    <section class="card" role="group">
+      <div class="card-top">
+        <div class="field field-name">
+          <label data-for="name">Name (optional)</label>
+          <input type="text" data-field="name" maxlength="30" autocomplete="off">
+        </div>
+        <button type="button" class="button button-remove" data-action="remove">Remove</button>
+      </div>
+      <div class="card-grid">
+        <div class="field field-price">
+          <label data-for="price">Price ($)</label>
+          <input type="text" inputmode="decimal" data-field="price" maxlength="9" autocomplete="off">
+          <p class="field-message" data-message="price" hidden></p>
+        </div>
+        <div class="field field-quantity">
+          <label data-for="quantity">Quantity</label>
+          <input type="text" inputmode="decimal" data-field="quantity" maxlength="9" autocomplete="off">
+          <p class="field-message" data-message="quantity" hidden></p>
+        </div>
+        <div class="field field-unit">
+          <label data-for="unit">Unit</label>
+          <select data-field="unit">
+            <option value="g">g</option>
+            <option value="oz">oz</option>
+            <option value="ml">ml</option>
+            <option value="fl oz">fl oz</option>
+            <option value="pieces">pieces</option>
+          </select>
+        </div>
+      </div>
+      <p class="result" data-result hidden><span class="unit-price" data-unit-price></span> <span class="badge" data-badge hidden></span></p>
+    </section>
+  </template>
+</body>
+</html>

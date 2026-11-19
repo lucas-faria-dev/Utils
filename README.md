@@ -23,6 +23,7 @@ The repository can also be served as-is with GitHub Pages (Settings → Pages �
 | Tool | Description | Folder |
 | --- | --- | --- |
 | UTC clock | Live clock showing the current time and date in UTC, the ISO 8601 timestamp, and your device's offset from UTC. | [`tools/utc-clock/`](tools/utc-clock/) |
+| Unit Price | Compares items by price per standard amount (per 100 g, 100 ml, oz, fl oz or piece) and marks the cheapest. Works offline and installs to the home screen. | [`tools/unit-price/`](tools/unit-price/) |
 
 ## Project structure
 
@@ -34,10 +35,17 @@ Utils/
 │       ├── base.css        Shared: design tokens (colours, fonts), reset, shared components
 │       └── home.css        Welcome page only
 └── tools/
-    └── utc-clock/          One folder per tool
-        ├── index.html      Markup
-        ├── style.css       Tool-specific styles
-        └── script.js       Tool logic
+    ├── utc-clock/          One folder per tool
+    │   ├── index.html      Markup
+    │   ├── style.css       Tool-specific styles
+    │   └── script.js       Tool logic
+    └── unit-price/
+        ├── index.html, style.css, script.js
+        ├── calc.js         Pure calculation rules (no DOM)
+        ├── sw.js           Service worker (offline copy)
+        ├── manifest.webmanifest, icons/   Home-screen install
+        ├── README.md       Tool notes: releasing updates, iPhone caveats
+        └── Test.md         Manual test cases
 ```
 
 ### Conventions
@@ -45,6 +53,7 @@ Utils/
 - **One folder per tool** under `tools/<tool-name>/`, using lowercase kebab-case names. Each folder holds `index.html`, plus `style.css` and `script.js` when needed.
 - **No inline CSS or JS.** Styles go in `.css` files, scripts in `.js` files.
 - **Shared styles live in `assets/css/base.css`.** Every page loads it first, then its own stylesheet. Colours, fonts and radii are CSS variables in `:root`. Change them there, not in page files.
+- **Classic scripts, not ES modules.** Load scripts with `<script src="..." defer>` so pages also work from `file://`, where browsers block modules.
 - **Shared components** in `base.css`: `.back` (the "Back to toolbox" link) and `.button` (primary action).
 - **Links point at files** (`.../index.html`, not `.../`), so navigation works both on GitHub Pages and when opening files straight from disk.
 

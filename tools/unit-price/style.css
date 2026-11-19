@@ -1,0 +1,308 @@
+/* ==========================================================================
+   Unit Price — page-specific styles. Requires assets/css/base.css.
+   Base styles are written for a 320 px wide screen; wider layouts use
+   min-width queries only. Every control is at least 44 px high and inputs
+   use 16 px text so phones do not zoom in when a field is tapped.
+   ========================================================================== */
+
+:root {
+  --gap: 12px;
+  color-scheme: dark;
+}
+
+html { text-size-adjust: 100%; }
+body {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.page {
+  width: 100%;
+  margin: 0 auto;
+  padding:
+    calc(12px + env(safe-area-inset-top))
+    calc(12px + env(safe-area-inset-right))
+    calc(16px + env(safe-area-inset-bottom))
+    calc(12px + env(safe-area-inset-left));
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* The shared back link is fixed by default; this page scrolls, so keep it
+   in the flow above the heading instead of floating over the cards. */
+.back {
+  position: static;
+  align-self: flex-start;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+/* ---- Metric / Imperial switch ------------------------------------------ */
+.system {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.system legend {
+  padding: 0;
+  margin-bottom: 4px;
+  color: var(--ink-dim);
+  font-size: 0.875rem;
+}
+
+.segmented {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.segment {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 44px;
+}
+.segment + .segment { border-left: 1px solid var(--line); }
+.segment input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 44px;
+  margin: 0;
+  font-size: 16px;
+  opacity: 0;
+  cursor: pointer;
+}
+.segment span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--panel);
+}
+.segment input:checked + span {
+  background: var(--mark);
+  color: var(--ground);
+}
+.segment input:focus-visible + span {
+  outline: 3px solid var(--ink);
+  outline-offset: -5px;
+}
+
+/* ---- Item cards --------------------------------------------------------- */
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--panel);
+  padding: 12px;
+  min-width: 0;
+}
+.card.is-cheapest {
+  background: var(--mark-soft);
+  border-color: var(--mark);
+  border-width: 2px;
+  padding: 11px;
+}
+
+.card-top {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.field-name { flex: 1 1 auto; }
+.field-unit { grid-column: 1 / -1; }
+.field label {
+  font-size: 0.875rem;
+  color: var(--ink);
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--ground);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+input[type="text"]::placeholder { color: var(--ink-dim); }
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 32px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+input[type="text"]:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--mark);
+  outline-offset: 1px;
+}
+
+input[aria-invalid="true"] {
+  border: 2px solid var(--danger);
+  padding: 7px 9px;
+}
+
+.field-message {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.875rem;
+}
+
+.result {
+  margin: 10px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--mark);
+  color: var(--ground);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* ---- Buttons (extends the shared .button) ------------------------------- */
+.button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 16px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  border: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.button:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.button-primary {
+  width: 100%;
+  min-height: 52px;
+  font-size: 1.125rem;
+  border: 2px solid var(--mark);
+}
+
+.button-secondary {
+  width: 100%;
+  background: transparent;
+  color: var(--mark);
+  border: 2px solid var(--mark);
+}
+
+.button-quiet {
+  align-self: center;
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--line);
+  font-weight: 400;
+}
+
+.button-remove {
+  flex: 0 0 auto;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font-weight: 400;
+  padding: 10px 12px;
+}
+
+.button-secondary:hover,
+.button-quiet:hover,
+.button-remove:hover {
+  filter: none;
+  border-color: var(--mark);
+  color: var(--mark);
+}
+
+/* ---- Summary ------------------------------------------------------------ */
+.summary-area { scroll-margin: 16px; }
+
+.summary,
+.note { margin: 0; }
+
+.summary:empty,
+.note:empty { display: none; }
+
+.summary {
+  font-size: 1.125rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.note {
+  margin-top: 4px;
+  color: var(--danger);
+}
+
+.footer {
+  min-height: 1.4em;
+  text-align: center;
+}
+.offline {
+  margin: 0;
+  color: var(--ink-dim);
+  font-size: 0.875rem;
+}
+
+[hidden] { display: none !important; }
+
+/* Larger screens: the same layout in a centred column. */
+@media (min-width: 600px) {
+  .page {
+    max-width: 480px;
+    padding-top: calc(24px + env(safe-area-inset-top));
+  }
+}
